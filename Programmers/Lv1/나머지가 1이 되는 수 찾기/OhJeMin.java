@@ -2,7 +2,7 @@ class Solution {
     public int solution(int n) {
         int answer = 0;
         int cnt = 1;
-        while(n != 0){
+        while(1){
            if( n % cnt == 1){
                answer = cnt;
                break;
