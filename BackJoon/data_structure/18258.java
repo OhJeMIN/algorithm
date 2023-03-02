@@ -11,7 +11,6 @@ public class Main {
 
     public static void selfMadeQueue(Long count, BufferedReader br, StringBuilder st) throws IOException {
         Deque<Integer> deque = new ArrayDeque<>();
-        if(count != 0){
             for(int i=0; i<count; i++){
                 String orderLine = br.readLine();
                 String[] order = orderLine.split(" ");
@@ -22,7 +21,6 @@ public class Main {
                 else if(order[0].equals("front")) front(deque, st);
                 else back(deque, st);
             }
-        }
         System.out.print(st);
     }
 
