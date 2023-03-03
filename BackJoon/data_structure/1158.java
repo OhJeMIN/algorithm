@@ -27,8 +27,7 @@ public class backJoon1158 {
                             else carryKk++;
                         } else {
                             int popped = poppedNum(josephus);
-                            if (popped != -1) josephusNew.add(popped);
-                            else carryKk++;
+                            carryKk = addOrNot(josephusNew,popped, carryKk);
                         }
                     }
                     carryK = carryKk;
@@ -41,8 +40,7 @@ public class backJoon1158 {
                             else carryKk++;
                         } else {
                             int popped = poppedNum(josephus);
-                            if (popped != -1) josephusNew.add(popped);
-                            else carryKk++;
+                            carryKk = addOrNot(josephusNew,popped, carryKk);
                         }
                     }
                     carryK = carryKk;
@@ -58,8 +56,7 @@ public class backJoon1158 {
                             else carryKk++;
                         } else {
                             int popped = poppedNum(josephusNew);
-                            if (popped != -1) josephus.add(popped);
-                            else carryKk++;
+                            carryKk = addOrNot(josephus,popped, carryKk);
                         }
                     }
                     carryK = carryKk;
@@ -72,8 +69,7 @@ public class backJoon1158 {
                             else carryKk++;
                         } else {
                             int popped = poppedNum(josephusNew);
-                            if (popped != -1) josephus.add(popped);
-                            else carryKk++;
+                            carryKk = addOrNot(josephus,popped, carryKk);
                         }
                     }
                     carryK = carryKk;
@@ -93,5 +89,10 @@ public class backJoon1158 {
     public static int poppedNum(Queue<Integer> q1){
         int popped = (q1.peek() != null) ? q1.poll() : -1;
         return popped;
+    }
+    public static int addOrNot(Queue<Integer> q1, int popped, int carryKk){
+        if (popped != -1) q1.add(popped);
+        else carryKk++;
+        return carryKk;
     }
 }
