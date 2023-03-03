@@ -23,8 +23,7 @@ public class backJoon1158 {
                     for (int i = 0; i < carryK; i++) {
                         if (i == carryK - 1) {
                             int popped = poppedNum(josephus);
-                            if (popped != -1) outputs.add(popped);
-                            else carryKk++;
+                            carryKk = addOutputs(outputs, popped, carryKk);
                         } else {
                             int popped = poppedNum(josephus);
                             carryKk = addOrNot(josephusNew,popped, carryKk);
@@ -36,8 +35,7 @@ public class backJoon1158 {
                     for (int i = 0; i < K; i++) {
                         if (i == K - 1) {
                             int popped = poppedNum(josephus);
-                            if (popped != -1) outputs.add(popped);
-                            else carryKk++;
+                            carryKk = addOutputs(outputs, popped, carryKk);
                         } else {
                             int popped = poppedNum(josephus);
                             carryKk = addOrNot(josephusNew,popped, carryKk);
@@ -52,8 +50,7 @@ public class backJoon1158 {
                     for (int i = 0; i < carryK; i++) {
                         if (i == carryK - 1) {
                             int popped = poppedNum(josephusNew);
-                            if (popped != -1) outputs.add(popped);
-                            else carryKk++;
+                            carryKk = addOutputs(outputs, popped, carryKk);
                         } else {
                             int popped = poppedNum(josephusNew);
                             carryKk = addOrNot(josephus,popped, carryKk);
@@ -65,8 +62,7 @@ public class backJoon1158 {
                     for (int i = 0; i < K; i++) {
                         if (i == K - 1) {
                             int popped = poppedNum(josephusNew);
-                            if (popped != -1) outputs.add(popped);
-                            else carryKk++;
+                            carryKk = addOutputs(outputs, popped, carryKk);
                         } else {
                             int popped = poppedNum(josephusNew);
                             carryKk = addOrNot(josephus,popped, carryKk);
@@ -92,6 +88,11 @@ public class backJoon1158 {
     }
     public static int addOrNot(Queue<Integer> q1, int popped, int carryKk){
         if (popped != -1) q1.add(popped);
+        else carryKk++;
+        return carryKk;
+    }
+    public static int addOutputs(ArrayList<Integer> arr, int popped, int carryKk){
+        if (popped != -1) arr.add(popped);
         else carryKk++;
         return carryKk;
     }
