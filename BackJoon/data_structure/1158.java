@@ -18,69 +18,13 @@ public class backJoon1158 {
         int carryK = 0;
         while (outputs.size() != N) {
             while (!josephus.isEmpty()) {
-                if (carryK > 0) {
-                    int carryKk = 0;
-                    for (int i = 0; i < carryK; i++) {
-                        if (i == carryK - 1) {
-                            int popped = poppedNum(josephus);
-                            carryKk = addOutputs(outputs, popped, carryKk);
-                        } else {
-                            int popped = poppedNum(josephus);
-                            carryKk = addOrNot(josephusNew,popped, carryKk);
-                        }
-                    }
-                    carryK = carryKk;
-                } else {
-                    int carryKk = 0;
-                    for (int i = 0; i < K; i++) {
-                        if (i == K - 1) {
-                            int popped = poppedNum(josephus);
-                            carryKk = addOutputs(outputs, popped, carryKk);
-                        } else {
-                            int popped = poppedNum(josephus);
-                            carryKk = addOrNot(josephusNew,popped, carryKk);
-                        }
-                    }
-                    carryK = carryKk;
-                }
+                carryK = carryKClass(carryK, K, josephus, josephusNew , outputs);
             }
             while (!josephusNew.isEmpty()) {
-                if (carryK > 0) {
-                    int carryKk = 0;
-                    for (int i = 0; i < carryK; i++) {
-                        if (i == carryK - 1) {
-                            int popped = poppedNum(josephusNew);
-                            carryKk = addOutputs(outputs, popped, carryKk);
-                        } else {
-                            int popped = poppedNum(josephusNew);
-                            carryKk = addOrNot(josephus,popped, carryKk);
-                        }
-                    }
-                    carryK = carryKk;
-                } else {
-                    int carryKk = 0;
-                    for (int i = 0; i < K; i++) {
-                        if (i == K - 1) {
-                            int popped = poppedNum(josephusNew);
-                            carryKk = addOutputs(outputs, popped, carryKk);
-                        } else {
-                            int popped = poppedNum(josephusNew);
-                            carryKk = addOrNot(josephus,popped, carryKk);
-                        }
-                    }
-                    carryK = carryKk;
-                }
+                carryK = carryKClass(carryK, K, josephusNew, josephus , outputs);
             }
         }
-        System.out.print("<");
-        for (int i = 0; i < outputs.size(); i++) {
-            if (i == outputs.size() - 1) System.out.print(outputs.get(i));
-            else {
-                System.out.print(outputs.get(i));
-                System.out.print(", ");
-            }
-        }
-        System.out.print(">");
+        printResult(outputs);
     }
     public static int poppedNum(Queue<Integer> q1){
         int popped = (q1.peek() != null) ? q1.poll() : -1;
@@ -95,5 +39,42 @@ public class backJoon1158 {
         if (popped != -1) arr.add(popped);
         else carryKk++;
         return carryKk;
+    }
+    public static int recognizeCarryKk(int carryK, int carryKk, Queue<Integer> josephus, Queue<Integer> josephusNew,ArrayList<Integer> outputs){
+        for (int i = 0; i < carryK; i++) {
+            if (i == carryK - 1) {
+                int popped = poppedNum(josephus);
+                carryKk = addOutputs(outputs, popped, carryKk);
+            } else {
+                int popped = poppedNum(josephus);
+                carryKk = addOrNot(josephusNew,popped, carryKk);
+            }
+        }
+        return  carryKk;
+    }
+
+    public static void printResult(ArrayList<Integer> outputs){
+        System.out.print("<");
+        for (int i = 0; i < outputs.size(); i++) {
+            if (i == outputs.size() - 1) System.out.print(outputs.get(i));
+            else {
+                System.out.print(outputs.get(i));
+                System.out.print(", ");
+            }
+        }
+        System.out.print(">");
+    }
+
+    public static int carryKClass(int carryK, int K , Queue<Integer> josephus ,Queue<Integer> josephusNew, ArrayList<Integer> outputs ){
+        if (carryK > 0) {
+            int carryKk = 0;
+            carryKk = recognizeCarryKk(carryK,carryKk,josephus,josephusNew,outputs);
+            carryK = carryKk;
+        } else {
+            int carryKk = 0;
+            carryKk = recognizeCarryKk(K,carryKk,josephus,josephusNew,outputs);
+            carryK = carryKk;
+        }
+        return carryK;
     }
 }
