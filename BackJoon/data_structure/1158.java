@@ -22,11 +22,11 @@ public class backJoon1158 {
                     int carryKk = 0;
                     for (int i = 0; i < carryK; i++) {
                         if (i == carryK - 1) {
-                            int popped = (josephus.peek() != null) ? josephus.poll() : -1;
+                            int popped = poppedNum(josephus);
                             if (popped != -1) outputs.add(popped);
                             else carryKk++;
                         } else {
-                            int popped = (josephus.peek() != null) ? josephus.poll() : -1;
+                            int popped = poppedNum(josephus);
                             if (popped != -1) josephusNew.add(popped);
                             else carryKk++;
                         }
@@ -36,11 +36,11 @@ public class backJoon1158 {
                     int carryKk = 0;
                     for (int i = 0; i < K; i++) {
                         if (i == K - 1) {
-                            int popped = (josephus.peek() != null) ? josephus.poll() : -1;
+                            int popped = poppedNum(josephus);
                             if (popped != -1) outputs.add(popped);
                             else carryKk++;
                         } else {
-                            int popped = (josephus.peek() != null) ? josephus.poll() : -1;
+                            int popped = poppedNum(josephus);
                             if (popped != -1) josephusNew.add(popped);
                             else carryKk++;
                         }
@@ -53,11 +53,11 @@ public class backJoon1158 {
                     int carryKk = 0;
                     for (int i = 0; i < carryK; i++) {
                         if (i == carryK - 1) {
-                            int popped = (josephusNew.peek() != null) ? josephusNew.poll() : -1;
+                            int popped = poppedNum(josephusNew);
                             if (popped != -1) outputs.add(popped);
                             else carryKk++;
                         } else {
-                            int popped = (josephusNew.peek() != null) ? josephusNew.poll() : -1;
+                            int popped = poppedNum(josephusNew);
                             if (popped != -1) josephus.add(popped);
                             else carryKk++;
                         }
@@ -67,11 +67,11 @@ public class backJoon1158 {
                     int carryKk = 0;
                     for (int i = 0; i < K; i++) {
                         if (i == K - 1) {
-                            int popped = (josephusNew.peek() != null) ? josephusNew.poll() : -1;
+                            int popped = poppedNum(josephusNew);
                             if (popped != -1) outputs.add(popped);
                             else carryKk++;
                         } else {
-                            int popped = (josephusNew.peek() != null) ? josephusNew.poll() : -1;
+                            int popped = poppedNum(josephusNew);
                             if (popped != -1) josephus.add(popped);
                             else carryKk++;
                         }
@@ -89,5 +89,9 @@ public class backJoon1158 {
             }
         }
         System.out.print(">");
+    }
+    public static int poppedNum(Queue<Integer> q1){
+        int popped = (q1.peek() != null) ? q1.poll() : -1;
+        return popped;
     }
 }
