@@ -1,5 +1,4 @@
 package org.example;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,17 +21,24 @@ public class backJoon2493 {
         Deque<Integer> st = new ArrayDeque<Integer>();
         Deque<Integer> order = new ArrayDeque<Integer>();
         StringBuilder sb = new StringBuilder();
-        int result = -1;
+        int result = -1, max =0;
         for(int i=0;i<input.length;i++){
-            System.out.println(i+"번째");
-            sb.append( razorPlace(st, order,input[i], i+1));
-            result = -1;
-
+            result = razorPlace(st, order,input[i], i+1 , max);
+            if(result <0){
+                while(result < 0){
+                    result = razorPlace(st, order,input[i], i+1,max);
+                }
+            }
+            sb.append(result);
+            sb.append(" ");
+            st.add(input[i]);
+            order.add(i+1);
+            if(st.peekLast() > max) max = st.peekLast();
         }
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
-    public static int razorPlace(Deque<Integer> st, Deque<Integer> order, int input, int orderNum){
+    public static int razorPlace(Deque<Integer> st, Deque<Integer> order, int input, int orderNum, int max){
         int result = 0 , stLast = st.peekLast() !=null ? st.peekLast() : 0;
         if(stLast - input > 0){
             result = order.peekLast() !=null ? order.peekLast() : 0;
@@ -40,12 +46,8 @@ public class backJoon2493 {
         else{
             st.pollLast();
             order.pollLast();
+            if(max > input) result = -1;
         }
-        st.add(input);
-        order.add(orderNum);
-        System.out.println("input ==" + input);
-        System.out.println("st ==" + st);
-        System.out.println("result ==" + result);
         return result;
     }
 }
