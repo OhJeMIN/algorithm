@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class backJoon7662 {
@@ -15,28 +14,23 @@ public class backJoon7662 {
         System.out.print(st);
     }
     public static void dualPriorityQueue(int K) throws IOException{
-        PriorityQueue<Integer> dqMax = new PriorityQueue<>(Collections.reverseOrder());
-        PriorityQueue<Integer> dqMin = new PriorityQueue<>();
+        TreeMap<Integer, Integer> que = new TreeMap<>();
         for(int i=0;i<K;i++){
             String[] input = br.readLine().split(" ");
             int N =Integer.parseInt(input[1]);
             if(input[0].equals("I")){
-                dqMax.add(N);
-                dqMin.add(N);
+                que.put(N,que.getOrDefault(N, 0) + 1);
             }
             else{
-                if(dqMax.isEmpty() || dqMin.isEmpty()) continue;
-                if(N >0){
-                    int num = dqMax.poll();
-                    dqMin.remove(num);
-                }
-                else{
-                    int num = dqMin.poll();
-                    dqMax.remove(num);
+                if(que.isEmpty()) continue;
+                int num = 0;
+                num =  N == 1 ? que.lastKey() : que.firstKey();
+                if(que.put(num, que.get(num) -1) == 1){
+                    que.remove(num);
                 }
             }
         }
-        if(dqMax.isEmpty()) st.append("EMPTY" + "\n");
-        else st.append(dqMax.peek()+" "+dqMin.peek()+"\n");
+        if(que.isEmpty()) st.append("EMPTY" + "\n");
+        else st.append(que.lastKey()+" "+que.firstKey()+"\n");
     }
 }
