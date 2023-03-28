@@ -18,8 +18,11 @@ public class backJoon1427 {
         for(int i=0;i<input.length;i++){
             System.out.print(pq.poll());
         }
+        /*for(int i=0;i<input.length;i++){
+            arr[i] = Integer.parseInt(input[i]);
+        }*/
         /*
-        //선택정렬
+        //정렬 1
         for(int i=0;i< arr.length;i++){
             for(int j=0;j+i<arr.length-1;j++){
                 if(arr[j+1]>arr[j]){
@@ -27,6 +30,23 @@ public class backJoon1427 {
                     arr[j+1] =arr[j];
                     arr[j] = temp;
                 }
+            }
+        }
+        for(int i=0;i<arr.length;i++){
+            System.out.print(arr[i]);
+        }
+        // 정렬 2
+        for(int i=0;i< arr.length;i++){
+            int Max = i;
+            for(int j= i+1;i<arr.length;i++){
+                if(arr[j] > arr[Max]){
+                    Max = j; //최대값을 가리키는 index 저장
+                }
+            }
+            if(arr[i] < arr[Max]){ //위에 for문에서 구한 Max와  원래 Max의 값을 비교해 스왑한다.
+                int temp = arr[i];
+                arr[i] = arr[Max];
+                arr[Max] = temp;
             }
         }
         for(int i=0;i<arr.length;i++){
