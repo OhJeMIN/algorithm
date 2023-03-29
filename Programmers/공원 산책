@@ -1,0 +1,46 @@
+import java.util.*;
+class Solution {
+    static Map<Integer,Integer> map = new HashMap<>();
+    
+    public int[] solution(String[] park, String[] routes) {
+        
+        int x = 0,y =0;
+        for(int i=0;i<park.length;i++){
+            String parkStart = park[i];
+            for(int j=0;j<parkStart.length();j++){
+                if(parkStart.charAt(j)=='S'){
+                    x=i;y=j;
+                }
+            }
+        }        
+        for(int i=0;i<routes.length;i++){
+            String order = routes[i];
+            int num = (order.charAt(2)-'0');
+            if(order.charAt(0) =='E'){
+                    if(( != 'X')){
+                        x += num;
+                    }
+                }
+                else if(order.charAt(0) == 'W') {
+                    if((park[y].charAt(x-num) != 'X')){
+                        x -= num;
+                    }
+                    x -= num;  
+                }
+                else if(order.charAt(0) == 'S'){
+                    if((park[y+num].charAt(x) != 'X')){
+                        y += num;
+                    }
+                }
+                else {
+                    if((park[y-num].charAt(x) != 'X')){
+                        y -= num;
+                    }
+                }
+        }
+        int[] answer = new int[2];
+        answer[0] = x;
+        answer[1] = y;
+        return answer;
+    }
+}
