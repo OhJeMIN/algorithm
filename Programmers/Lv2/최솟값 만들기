@@ -1,0 +1,17 @@
+import java.util.*;
+class Solution
+{
+    public int solution(int []A, int []B) {        
+        int answer = 0;
+        PriorityQueue<Integer> pqA = new PriorityQueue<>();
+        PriorityQueue<Integer> pqB = new PriorityQueue<>(Collections.reverseOrder());
+        for(int a : A) pqA.add(a);        
+        for(int b : B) pqB.add(b); 
+        int length =  pqA.size();
+        for(int i=0;i<length;i++){
+            int ab = pqA.poll()* pqB.poll();
+            answer += ab;
+        }
+        return answer;
+    }
+}
