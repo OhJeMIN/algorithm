@@ -1,0 +1,25 @@
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int index= 1;
+        int countN = removeZero(Integer.toString(n,2));
+        while(n>0){
+            String s = Integer.toString(n+index,2);
+            int count = removeZero(s);
+            index++;
+            if(count == countN) {
+                answer = n+index-1;
+                break;
+            }            
+        }
+        return answer;
+    }
+    public static int removeZero(String s){
+        String noZero="";
+        for(int i=0;i<s.length();i++){
+            String sub = s.substring(i,i+1);
+            if(sub.equals("1")) noZero+= sub;
+        }
+        return noZero.length();
+    }
+}
