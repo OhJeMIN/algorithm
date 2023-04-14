@@ -1,0 +1,26 @@
+class Solution {
+    static int removedZero = 0;
+    public int[] solution(String s) {
+        int[] answer = new int[2];
+        String noZero = "";
+        int times = 0;
+        while(s.length()>0){
+            if(s.length() == 1) break;
+            noZero = removeZero(s);
+            s = Integer.toString(noZero.length(),2);
+            times++;
+        }
+        answer[0] = times;
+        answer[1] = removedZero;
+        return answer;
+    }
+    public static String removeZero(String str){
+        String noZero = "";
+        for(int i=0;i<str.length();i++){
+            String sub = str.substring(i,i+1);
+            if(sub.equals("1")) noZero += sub;
+            else removedZero +=1;
+        }
+        return noZero;
+    }
+}
