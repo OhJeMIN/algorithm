@@ -1,0 +1,19 @@
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int s = n;
+        for(int i=1;i<=n;i++){
+            s = n;
+            int k = i;
+            while(s>-1){
+                s-=k;
+                k++;
+                if(s == 0) {
+                    answer++;
+                    break;
+                }
+            }            
+        }
+        return answer;
+    }
+}
