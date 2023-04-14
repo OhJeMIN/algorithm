@@ -2,18 +2,19 @@ class Solution {
     public int solution(int n) {
         int answer = 0;
         int index= 1;
-        int countN = removeZero(Integer.toString(n,2));
+        int countN = Integer.bitCount(n);
         while(n>0){
-            String s = Integer.toString(n+index,2);
-            int count = removeZero(s);
-            index++;
+            n++;
+            int count = Integer.bitCount(n);
             if(count == countN) {
-                answer = n+index-1;
+                answer = n;
                 break;
             }            
         }
         return answer;
     }
+    /* 1을 찾아주는 함수가 시간초과가 난듯 싶다. 
+       Integer.bitCount()는 숫자를 이진수로 변환하여 1의 갯수를 구해주는 메소드로 대략 1.5초 감소 시킴.
     public static int removeZero(String s){
         String noZero="";
         for(int i=0;i<s.length();i++){
@@ -22,4 +23,5 @@ class Solution {
         }
         return noZero.length();
     }
+    */
 }
