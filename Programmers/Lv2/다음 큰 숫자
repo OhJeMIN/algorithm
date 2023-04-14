@@ -25,3 +25,26 @@ class Solution {
     }
     */
 }
+// 첫번째 풀이 시간초과 함수 수정
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int countN = removeZero(Integer.toString(n,2));        
+        while(n>0){
+            n++;
+            int count = removeZero(Integer.toString(n,2));          
+            if(count == countN) {
+                answer = n;
+                break;
+            }            
+        }
+        return answer;
+    }    
+    public static int removeZero(String s){
+        int noZero=0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i) == '1') noZero++;
+        }
+        return noZero;
+    }
+}
