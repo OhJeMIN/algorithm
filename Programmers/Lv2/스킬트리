@@ -1,0 +1,43 @@
+import java.util.*;
+class Solution {
+    static Deque<Character> correct_skill_tree = new ArrayDeque<>();
+    static List<Character> list = new ArrayList<>();
+    public int solution(String skill, String[] skill_trees) {        
+        int answer = 0;
+        boolean flag = true;
+        for(String skills : skill_trees){
+            fill_skill(skill);
+            for(int i=0;i<skills.length();i++){
+                System.out.println(correct_skill_tree);
+                if(!correct_skill_tree.isEmpty()){
+                    char s =correct_skill_tree.peek();
+                    if(s == skills.charAt(i)) {
+                        correct_skill_tree.poll();
+                        list.remove(list.indexOf(skills.charAt(i)));
+                    } 
+                    else{
+                        if(list.contains(skills.charAt(i))) flag = false;
+                    }
+                }                
+            }
+            if(correct_skill_tree.isEmpty() || flag) answer++;
+            reset_skill(correct_skill_tree);
+            flag = true;
+        }
+        return answer;
+    }
+    
+    public static void fill_skill(String skill){
+        for(int i=0;i<skill.length();i++){
+            correct_skill_tree.add(skill.charAt(i));
+            list.add(skill.charAt(i));
+        }
+    }
+    
+    public static void reset_skill(Deque<Character> dq){
+        while(dq.size() > 0){
+            dq.poll();
+        }
+        list.clear();
+    }
+}
