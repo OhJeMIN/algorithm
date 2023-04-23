@@ -1,0 +1,38 @@
+import java.util.*;
+class Solution {
+    public int solution(int n, int[] stations, int w) {
+        int answer = 0;
+        int len = 0;
+        int distance = w*2 +1;
+        boolean[] visited = new boolean[n+1];
+        for(int s : stations){
+            for(int i = s-w; i<= s+w;i++){
+                if(i > n || i < 0) continue;
+                else visited[i] = true;                
+            }
+        }
+        Stack<Integer> st = new Stack<>();
+        int startIndex = 1;
+        for(int i=1;i<n+1;i++){
+            st.push(i);            
+            int peek = st.peek();
+            if(visited[peek] && !visited[i-1]){
+                int lens = i - startIndex;
+                if(distance > lens) answer ++;
+                else{
+                    answer+=(lens / distance + lens % distance);                    
+                }
+                startIndex = i+distance;
+            }
+            if(i == n && !visited[i]){
+                int lens = i - startIndex + 1;
+                if(distance > lens) answer ++;
+                else{
+                    answer+=(lens / distance + lens % distance);                    
+                }
+                startIndex = i+distance;
+            }
+        }
+        return answer;
+    }
+}
