@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public int solution(int sticker[]) {
+        int answer = 0;
+        int max = 0;        
+        Deque<Integer> dq = new ArrayDeque<>();
+        List<Integer> visited = new ArrayList<>();
+        for(int i : sticker) dq.add(i);
+        for(int j= 0; j<sticker.length; j++){
+          int temp = 0; 
+          for(int i = j; i< sticker.length;i+=2){
+            if(i == sticker.length && visited.contains(sticker[0])) continue;
+            temp += sticker[i];
+            visited.add(i);  
+          }
+          if(temp > max) max = temp;
+          visited.clear();
+        }
+        return max;
+    }
+}
