@@ -1,0 +1,58 @@
+import java.util.*;
+class Solution {
+    static int INF = 500001;
+    
+    public int solution(int N, int[][] road, int K) {
+        int answer = 0;
+        boolean[] visited = new boolean[N+1];
+        int[] dp = new int[N+1];
+        int[][] distance = new int[N+1][N+1];
+        //큰 값으로 초기화
+        for(int i=1;i<N+1;i++){
+            for(int j=1;j<N+1;j++){
+                if(i==j) continue;
+                distance[i][j] = INF;
+            }
+        }
+        for(int i= 0; i<road.length;i++){
+            int from = road[i][0];
+            int to = road[i][1];
+            int dt = road[i][2];
+            //방향이 없기에 반대방향도 저장
+            if (distance[from][to] > dt) {
+               distance[from][to] = dt;
+               distance[to][from] = dt; 
+            }            
+        }
+        Arrays.fill(dp, INF);
+        dp[1] = 0;
+        System.out.println(Arrays.toString(dp));
+        visited[1] = true;
+        for(int i=1;i<N;i++){
+            int min_index = 1;
+            int min_val = INF;
+            //방문
+            for(int j=2;j<=N;j++){
+                System.out.println(dp[j]);
+                System.out.println(Arrays.toString(dp));
+               if(!visited[j] && min_val > dp[j]){
+                   min_index = j;
+                   min_val = dp[j];                    
+                } 
+            }
+            visited[min_index] = true;
+            //방문한 노드를 기준으로 최소값을 정리
+            for(int j=2;j<=N;j++){
+                if(dp[j] > dp[min_index] + distance[min_index][j]){
+                    dp[j] = dp[min_index] + distance[min_index][j];
+                }
+            }
+        }
+        
+         for (int i = 1;i<N+1; i++) {
+            if(dp[i]<=K) answer ++;
+        }
+        
+        return answer;
+    }
+}
