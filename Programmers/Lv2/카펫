@@ -1,0 +1,8 @@
+def solution(brown, yellow):
+    answer = []
+    total_block = brown+ yellow
+    for i in range(3,total_block+1):
+        if total_block % i == 0:
+            x = total_block//i
+            if x >=i and (x-2)*(i-2) == yellow:
+                return[x,i]
