@@ -12,7 +12,7 @@ def solution(tickets):
     visited = []    
     while now:      
         top = now[-1]
-        #top이 그래프에 없거나, top을 시작점으로 하는 티켓이 없는 경우, 스택에서 꺼내와 path에 저장        
+        #top이 그래프에 없거나, top을 시작점으로 하는 티켓이 없는 경우, 스택에서 꺼내와 visited에 저장        
         if top not in routes or len(routes[top]) == 0:
             visited.append(now.pop())
         #top을 시작점으로 하는 끝점 중 가장 마지막 지점을 꺼내와 스택에 저장
