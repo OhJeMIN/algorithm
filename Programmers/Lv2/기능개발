@@ -1,0 +1,18 @@
+from collections import deque
+import math
+def solution(progresses, speeds):
+    answer = []
+    d = deque()
+    for p,s in zip(progresses,speeds):
+        days =  math.ceil((100 - p) / s)
+        if days > 0:
+            d.append(days)
+        else :
+            d.append(0)
+    num = 0
+    for i in range(len(d)):
+        if d[i] > d[num]:
+            answer.append(i-num)
+            num = i
+    answer.append(len(d)-num)
+    return answer
