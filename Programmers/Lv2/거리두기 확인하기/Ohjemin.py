@@ -1,32 +1,34 @@
+from collections import deque
 def solution(places):
     answer = []
-    dx = [1,0,-1,0]
-    dy = [0,1,0,-1]
-    ddx = [1,1,-1,-1]
-    ddy = [1,-1,1,-1]
-    for k in range(len(places)):
-        flag = True
-        for y in range(len(places[0])):
-            for x in range(len(places[0][0])):
-                if places[k][y][x] == 'P':
-                    for i in range(4):
-                        X = x + dx[i]
-                        Y = y + dy[i]
-                        if 0<=X<len(places[k][y]) and 0<= Y < len(places[k]):
-                            if places[k][Y][X] == 'P':
-                                flag = False
-                                break;
-                            if places[k][Y][X] == 'O':
-                                if places[k][Y+dy[i]][X+dx[i]] == 'P':
-                                    flag = False
-                                    break;
-                    for i in range(4):
-                        X = x + ddx[i]
-                        Y = y + ddy[i]
-                        if 0<=X<len(places[k][y]) and 0<= Y < len(places[k]):                        
-                            if places[k][Y][X] == 'P':
-                                if places[k][abs(y-Y)][X] == 'O' or places[k][Y][abs(x-X)] == 'O':
-                                    flag = False
-                                    break;
-        answer.append(1) if flag else answer.append(0)                            
+    def BFS(sits):
+        start = []        
+        for i in range(5):
+            for j in range(5):
+                if sits[i][j] == 'P':
+                    start.append([i,j])
+        for s in start:
+            queue = deque([s])
+            distance = [[0 for i in range(5)] for j in range(5)]
+            visited = [[0 for i in range(5)] for j in range(5)]
+            visited[s[0]][s[1]] = 1
+            while queue:
+                y, x = queue.popleft()
+                dx = [1,0,-1,0]
+                dy = [0,1,0,-1]
+                for i in range(4):
+                    X = x + dx[i]
+                    Y = y + dy[i]
+                    if 0<=X<5 and 0<=Y<5 and visited[Y][X] == 0:
+                        if sits[Y][X] == 'O':
+                            visited[Y][X] =1
+                            distance[Y][X] = distance[y][x] + 1
+                            queue.append([Y,X])
+                        if sits[Y][X] == 'P' and distance[y][x] <=1:
+                            return 0
+        return 1
+                            
+                
+    for i in places:
+        answer.append(BFS(i))
     return answer
