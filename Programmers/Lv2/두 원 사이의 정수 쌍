@@ -1,0 +1,11 @@
+#x,y좌표에 있을땐 1사분면으로 다 구할 수 있는지 확인
+def solution(r1, r2):
+    cnt = 0
+    for i in range(1, r2):
+        y = (r1**2 - i**2) if r1 > i else 0
+        y1 = int(y**0.5)
+        y2 = int((r2**2 - i**2)**0.5)
+        # x 좌표에 따른 y 좌표
+        cnt += y2 - y1 + (1 if y1 ** 2 == y else 0) # 정수였는지 판별
+    cnt += 1
+    return cnt * 4
