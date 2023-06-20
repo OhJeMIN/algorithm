@@ -1,23 +1,29 @@
 from collections import deque
 def solution(queue1, queue2):
     answer = 0
+    limit = (len(queue1)) * 4
     total = sum(queue1) + sum(queue2)
-    def BFS(q1,q2, total):
-        nonlocal answer
-        answer+=1
-        if sum(q1) == total and sum(q2) == total :
-            return
-        if answer == len(q1) + len(q2):
-            answer = 0
-            return
-        if sum(q1) > total : 
+    q1 = deque(queue1)
+    q2 = deque(queue2)
+    q1_total = sum(q1)
+    q2_total = sum(q2)
+    while True:                   
+        if q1_total > q2_total : 
             tmp = q1.popleft()
             q2.append(tmp)
-            BFS(q1,q2,total)
-        else:
+            q1_total -=tmp
+            q2_total +=tmp
+            answer+=1
+        elif q2_total > q1_total:
             tmp = q2.popleft()
             q1.append(tmp)
-            BFS(q1,q2,total)
+            q1_total +=tmp
+            q2_total -=tmp
+            answer+=1
+        else:
+            break;
+        if answer == limit :
+            answer = -1
+            break; 
         
-    BFS(deque(queue1),deque(queue2),total//2)
-    return answer-1
+    return answer
