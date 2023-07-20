@@ -1,0 +1,20 @@
+SELECT 
+    T2.USER_ID
+    ,T2.NICKNAME
+    ,T1.TOTAL_PRICE
+FROM
+    (SELECT 
+        WRITER_ID
+        ,SUM(PRICE) AS TOTAL_PRICE
+     FROM
+        USED_GOODS_BOARD
+     WHERE
+        STATUS = 'DONE'
+     GROUP BY
+        WRITER_ID) T1
+    JOIN USED_GOODS_USER T2
+    ON T1.WRITER_ID = T2.USER_ID
+WHERE
+    total_price >= 700000
+ORDER BY
+    TOTAL_PRICE;
