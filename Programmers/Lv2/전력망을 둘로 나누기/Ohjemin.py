@@ -1,28 +1,32 @@
+from collections import deque
 def solution(n, wires):
-    answer = -1
-    visited = [[False for j in range(len(wires))] for i in range(len(wires))]
-    network = {}
-    networkR = {}
-    for idx, n in wires:
-        network[idx] = network.get(idx, []) + [n]
-        networkR[n] = networkR.get(n, []) + [idx]            
+    graph = [[] for _ in range(n+1)]
+    for start, end in wires:
+        graph[start].append(end)
+        graph[end].append(start)
     
-    def flow(idx, num, key, val, network, visited, n):
-        if idx == key && num == val:
-            return n
-        if !visited[key][val] && !visited[val][key]:
-            visited[key][val] = True
-            visited[val][key] = True
-            n-=1
-            flow(idx,num, val, network[val], network, visited, n)
-                
+    
+    def checkConnect(start):
+        visited = [0] * (n+1)
+        q = deque()
+        q.append(start)
+        visited[start] = 1
+        cnt = 0
+        while q:
+            end = q.popleft()
+            for i in graph[end]:
+                if not visited[i]:
+                    q.append(i)
+                    visited[i] = 1
+                    cnt +=1
+        return cnt
+    
+    connectedWire = n
+    for start, end in wires:
+        graph[start].remove(end)
+        graph[end].remove(start)
+        connectedWire = min(abs(checkConnect(start) - checkConnect(end)), connectedWire)
+        graph[start].append(end)
+        graph[end].append(start)
         
-    for idx, num in enumerate(wires):
-        int dividedNet = 0
-        for key, val in network.items():
-            flow(idx, num, key, val, network, visited, n)
-    
-            
-    print(network)
-    print(networkR)
-    return answer
+    return connectedWire
