@@ -2,6 +2,7 @@
 
 ## ✅ 사용언어
 - Python
+- JAVA
 <br/>
 <br/>
 
