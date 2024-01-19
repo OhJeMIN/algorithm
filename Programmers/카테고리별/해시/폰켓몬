@@ -1,0 +1,13 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] nums) {
+        int answer = 0;
+        HashSet<Integer> set = new HashSet<>();
+        for(int n : nums){
+            set.add(n);
+        }
+        System.out.println(set);
+        int chooseNum = nums.length / 2;
+        return chooseNum >= set.size() ? set.size() : chooseNum;
+    }
+}
