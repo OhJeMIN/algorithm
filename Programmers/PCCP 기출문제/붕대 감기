@@ -1,0 +1,45 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] bandage, int health, int[][] attacks) {
+        int answer = 0;
+        int limit = health;
+        int continueSuccess = 0;
+        int maxTime = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i=0;i<attacks.length;i++){
+            map.put(attacks[i][0],attacks[i][1]);
+            if(i == attacks.length -1){
+                maxTime = attacks[i][0];
+            }
+        }
+        int time = 0;
+        int tmp = 12;
+        while(health > 0){
+            if(time > maxTime) break; //마지막 공격 후 종료
+            if(map.containsKey(time)){
+                health -= map.get(time);
+                continueSuccess = 0;
+            }
+            else{                
+                continueSuccess++;
+                // 한계점보다 낮을 때 성공 ++
+                if (health < limit) {
+                    health += bandage[1];               
+                }
+                //연속 성공 시 체력 추가
+                if(continueSuccess == bandage[0]){
+                    if (health < limit) {
+                        health += bandage[2];
+                        continueSuccess = 0;
+                    }                    
+                }
+                // 다 더하고 한계보다 높으면 한계로 초기화
+                if(health > limit){
+                    health = limit;
+                }
+            }            
+            time++;
+        }
+        return health > 0 ? health : -1;
+    }
+}
