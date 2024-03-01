@@ -1,0 +1,74 @@
+import java.util.*;
+class Solution {
+    boolean[][] visited;
+    int[] dx = {1,0,-1,0};
+    int[] dy = {0,1,0,-1};
+    int count;
+    public int solution(int[][] land) {
+        int answer = 0;
+        int len = land[0].length;
+        visited = new boolean[land.length][len];
+        int groupId = 2;
+        Map<Integer, Integer> oilAmount = new HashMap<>();
+        for(int i=0;i<land.length; i++){
+            for (int j = 0; j < len; j++) {            
+                if (land[i][j] == 1 && !visited[i][j]) {
+                   int size = BFS(i,j,land , groupId); 
+                    oilAmount.put(groupId, size);
+                    groupId++;
+                }    
+            }
+        }
+        
+        int maxOil = 0;
+        for (int col = 0; col < len; col++) {
+            Set<Integer> countedGroups = new HashSet<>();
+            int totalOil = 0;
+            for (int row = 0; row < land.length; row++) {
+                int cell = land[row][col];
+                if (cell > 1 && !countedGroups.contains(cell)) {
+                    totalOil += oilAmount.get(cell);
+                    countedGroups.add(cell);
+                }
+            }
+            maxOil = Math.max(maxOil, totalOil);
+        }
+        
+        return maxOil;
+    }
+    public int BFS(int x, int y , int[][] land , int groupId){
+        Queue<node> q = new LinkedList<>();
+        q.add(new node(x, y));        
+        count = 1;
+        visited[x][y] = true;
+        land[x][y] = groupId;
+        
+        while(!q.isEmpty()){
+            node now = q.poll();
+            for(int i=0;i<4;i++){
+                int curX = now.x + dx[i];
+                int curY = now.y + dy[i];
+                if(curX >=0 && curY >=0 && curX < land.length && curY < land[0].length){
+                    if(!visited[curX][curY] && land[curX][curY] == 1){
+                        visited[curX][curY] = true;
+                        land[curX][curY] = groupId;
+                        count++;
+                        q.add(new node(curX, curY));
+                    }
+                }
+            }            
+        }
+        return count;
+    }
+    
+
+    public class node {
+        int x;
+        int y;
+
+        public node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+}
