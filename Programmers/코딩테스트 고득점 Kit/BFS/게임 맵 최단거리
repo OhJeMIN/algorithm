@@ -1,0 +1,56 @@
+import java.util.*;
+class Solution {
+    public int solution(int[][] maps) {
+        return new NumberOfCases(maps).calc();
+    }
+}
+
+class NumberOfCases {
+    
+    private int [][] maps;
+    private int[] dx = {1, 0, -1, 0};
+    private int[] dy = {0, 1, 0, -1};
+    private boolean[][] visited;
+    
+    public NumberOfCases(int [][] maps){
+        this.maps = maps;
+        this.visited = new boolean[maps.length][maps[0].length];
+    }
+    
+    public int calc(){
+        return calc(0,0);
+    }
+    
+    public int calc(int i, int j){
+        Queue<Point> q = new LinkedList<>();
+        q.add(new Point(i, j));
+        visited[i][j] = true;
+        while(!q.isEmpty()){
+            Point point = q.poll();
+            int x = point.x;
+            int y = point.y;
+            for(int k=0;k<4;k++){
+                int curX = x + dx[k];
+                int curY = y + dy[k];
+                if(curX >= 0 && curY >= 0 && curX < maps[0].length && curY < maps.length){
+                    if(maps[curY][curX] == 1 && !visited[curY][curX]){
+                        q.add(new Point(curX,curY));
+                        maps[curY][curX] = maps[y][x] + 1;
+                        visited[curY][curX] = true;
+                    }
+                }
+            }
+        }
+        return maps[maps.length-1][maps[0].length-1] > 1 ? maps[maps.length-1][maps[0].length-1] : -1;
+    }
+}
+
+class Point {
+    public final int x;
+    public final int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
