@@ -1,0 +1,90 @@
+import java.util.*;
+
+class Solution {
+    public int[] dx = {1, 0, -1, 0};
+    public int[] dy = {0, 1, 0, -1};
+    public boolean[][] visited;
+
+    public int solution(String[] board) {
+        int answer = 0;
+        boolean flag = false;
+        int rX = 0;
+        int rY = 0;
+        visited = new boolean[board.length][board[0].length()];
+        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length(); j++) {
+                if (board[i].charAt(j) == 'G') {
+                    for (int k = 0; k < 4; k++) {
+                        int x = i + dx[k];
+                        int y = j + dy[k];
+                        if (x >= 0 && y >= 0 && x < board.length && y < board[0].length() && board[x].charAt(y) == 'D') {
+                            flag = true;
+                        }
+                    }
+                }
+                if (board[i].charAt(j) == 'R') {
+                    rX = i;
+                    rY = j;
+                }
+            }
+        }
+
+        if (!flag) return -1;
+        else answer = BFS(board, rX, rY);
+        
+        return answer;
+    }
+
+    public int BFS(String[] board, int i, int j) {
+        Queue<Node> q = new LinkedList<>();
+        q.add(new Node(i, j, 0));
+        visited[i][j] = true;
+        int answer = 0;
+
+        while (!q.isEmpty()) {
+            Node node = q.poll();
+            int x = node.x;
+            int y = node.y;
+            int move = node.move;
+
+            for (int k = 0; k < 4; k++) {
+                int curX = x + dx[k];
+                int curY = y + dy[k];
+                
+                while (curX >= 0 && curY >= 0 && curX < board.length && curY < board[0].length() && board[curX].charAt(curY) != ' ') {
+                    if (board[curX].charAt(curY) == 'D') {
+                        break;
+                    }
+                    if (board[curX].charAt(curY) == 'G') {
+                        return move + 1;
+                    }
+                    curX += dx[k];
+                    curY += dy[k];
+                }
+                
+                // 큐에 넣기 전에 범위 및 방문 여부 확인
+                curX -= dx[k];
+                curY -= dy[k];
+                if (curX >= 0 && curY >= 0 && curX < board.length && curY < board[0].length() && !visited[curX][curY]) {
+                    visited[curX][curY] = true;
+                    q.add(new Node(curX, curY, move + 1));
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public class Node {
+        private int x;
+        private int y;
+        private int move;
+
+        public Node(int x, int y, int move) {
+            this.x = x;
+            this.y = y;
+            this.move = move;
+        }
+    }
+}
