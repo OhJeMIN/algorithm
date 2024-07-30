@@ -56,8 +56,9 @@ class Solution {
                     if (board[curX].charAt(curY) == 'D') {
                         break;
                     }
-                    if (board[curX].charAt(curY) == 'G') {
-                        return move + 1;
+                    if (board[curX].charAt(curY) == 'G' && board[curX+dx[k]].charAt(curY+dy[k]) == 'D') {
+                        answer = Math.min(answer,move+1);
+                        return answer;
                     }
                     curX += dx[k];
                     curY += dy[k];
