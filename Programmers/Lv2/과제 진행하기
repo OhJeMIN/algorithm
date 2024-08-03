@@ -35,9 +35,17 @@ class Solution {
                 }
                 else {
                     answerList.add(cWork.name);
-                    if (!st.isEmpty()) {
+                    int elapsedTime = play - cWork.playTime;                    
+                    while(!st.isEmpty() && elapsedTime > 0) {
                         Work lastWork = st.pop();
-                        st.push(new Work(lastWork.name, lastWork.time, lastWork.playTime + remainingPlayTime));
+                        if(lastWork.playTime <= elapsedTime) {
+                            answerList.add(lastWork.name);
+                            elapsedTime -= lastWork.playTime;
+                        } else {
+                            lastWork.playTime -= elapsedTime;
+                            st.push(lastWork);
+                            elapsedTime = 0;
+                        }
                     }
                 }
             }            
