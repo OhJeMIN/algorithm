@@ -1,0 +1,22 @@
+class Solution {
+    public static int answer;
+    public int solution(int[] numbers, int target) {
+        answer = 0;
+        DFS(numbers, target, 0 , 0);
+        return answer;
+    }
+    
+    public void DFS(int[] numbers, int target, int sum, int index){
+        if(index == numbers.length){
+            if(sum == target){
+                answer++;
+                return;
+            }            
+        }        
+        else{
+            DFS(numbers, target, sum + numbers[index], index+ 1);
+            DFS(numbers, target, sum - numbers[index], index+ 1);
+        }
+    }
+    
+}
